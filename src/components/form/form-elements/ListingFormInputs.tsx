@@ -363,7 +363,7 @@ export default function ListingStepperForm({
         brand: form.brand,
         category: form.category,
         subcategory: form.subcategory,
-        sku: form.sku,
+        sku: "default",
 
         priceCents: Number(form.priceCents || 0),
         compareAtCents: Number(form.compareAtCents || 0),
@@ -579,10 +579,10 @@ export default function ListingStepperForm({
                   />
                 </div>
 
-                <div>
+                {/* <div>
                   <Label>SKU</Label>
                   <Input value={form.sku} onChange={(e) => updateTop("sku", e.target.value)} />
-                </div>
+                </div> */}
               </div>
 
               <div>
