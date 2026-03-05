@@ -69,8 +69,9 @@ import {
   GroupIcon,
 } from "../../icons";
 import Badge from "../ui/badge/Badge";
+import BASE_URL from "../url";
 
-import {BASE_URL} from "../../url.ts"
+// import {BASE_URL} from "../../url.ts"
 
 
 // const API_BASE = "http://localhost:8080";

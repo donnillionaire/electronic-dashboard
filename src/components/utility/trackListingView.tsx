@@ -1,5 +1,6 @@
 import  { useEffect } from "react";
-import BASE_URL from "../../url";
+import BASE_URL from "../url";
+// import BASE_URL from "../../url";
 
 // const API_BASE = "http://localhost:8080";
 

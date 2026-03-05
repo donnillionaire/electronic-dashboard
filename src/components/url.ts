@@ -1,8 +1,8 @@
-// export const BASE_URL = "http://167.172.48.148:51204";
+export const BASE_URL = "http://167.172.48.148:51205";
 
 // export const BASE_URL="https://api.jambohomeventures.co.ke"
 
-export const BASE_URL = "http://localhost:8080";
+// export const BASE_URL = "http://localhost:8080";
 
 
 

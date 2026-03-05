@@ -148,8 +148,9 @@ import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { MoreDotIcon } from "../../icons";
 import { useEffect, useMemo, useState } from "react";
+import BASE_URL from "../url";
 
-import {BASE_URL} from "../../url.ts"
+// import {BASE_URL} from "../../url.ts"
 
 // const API_BASE = "http://localhost:8080";
 

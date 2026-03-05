@@ -243,7 +243,8 @@ import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
-import BASE_URL from "../../url";
+import BASE_URL from "../url";
+// import BASE_URL from "../../url";
 
 type MeResponse = {
   id: number;

@@ -5,9 +5,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../ui/table";
 import Badge from "../ui/badge/Badge";
+import BASE_URL from "../url";
 
 // const API_BASE = "http://localhost:8080";
-import {BASE_URL} from "../../url.ts"
+// import {BASE_URL} from "../../url.ts"
 
 
   const API_BASE = BASE_URL

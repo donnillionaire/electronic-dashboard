@@ -167,7 +167,8 @@ import { useEffect, useState } from "react";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { useNavigate } from "react-router-dom";
-import BASE_URL from "../../url";
+import BASE_URL from "../url";
+// import BASE_URL from "../../url";
 
 type MeResponse = {
   id: number;

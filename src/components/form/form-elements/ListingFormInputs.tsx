@@ -8,7 +8,8 @@ import Label from "../Label";
 import Input from "../input/InputField";
 import Select from "../Select";
 import Modal from "../../modal/Modal";
-import BASE_URL from "../../../url";
+import BASE_URL from "../../url";
+// import BASE_URL from "../../../url";
 
 type ListingStatus = "Pending" | "Draft" | "Active" | "Archived";
 
@@ -336,6 +337,8 @@ export default function ListingStepperForm({
         if (!url) throw new Error("Upload ok but missing url in response");
 
         uploadedUrls.push(url);
+        console.log("uploaded", uploadedUrls)
+
       }
 
       addImageUrls(uploadedUrls);
