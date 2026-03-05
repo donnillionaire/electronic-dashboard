@@ -6,12 +6,12 @@ set -Eeuo pipefail
 # -----------------------------
 # Config
 # -----------------------------
-IMAGE_NAME="dashboard-image-jh"
-CONTAINER_NAME="dashboard-container-jh"
+IMAGE_NAME="dashboard-image-elec"
+CONTAINER_NAME="dashboard-container-elec"
 DOCKERFILE_DIR="."
 TAIL_LOGS=true
 
-EXTERNAL_PORT=3210     # access on host
+EXTERNAL_PORT=3211     # access on host
 CONTAINER_PORT=80      # nginx listens on 80 inside container
 RESTART_POLICY="unless-stopped"
 
