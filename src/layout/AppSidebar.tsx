@@ -296,7 +296,7 @@ const AppSidebar: React.FC = () => {
         className={`py-8 flex ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
           }`}
       >
-        <Link to="/">
+        {/* <Link to="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <img
@@ -322,7 +322,7 @@ const AppSidebar: React.FC = () => {
               height={32}
             />
           )}
-        </Link>
+        </Link> */}
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6">
