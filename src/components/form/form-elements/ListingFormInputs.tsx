@@ -78,6 +78,12 @@ const CATEGORY_OPTIONS = [
   { value: "laptop", label: "Laptop" },
   { value: "camera", label: "Camera" },
   { value: "accessory", label: "Accessory" },
+  { value: "refrigerator", label: "Refrigerator" },
+  { value: "microwaves", label: "Microwaves" },
+  { value: "kitchen", label: "Kitchen" },
+  { value: "washers", label: "Washers" },
+  { value: "freezer", label: "Freezer" },
+  { value: "airconditioners", label: "Airconditioners" },
 ];
 
 const SUBCATEGORY_BY_CATEGORY: Record<string, { value: string; label: string }[]> =
@@ -111,6 +117,12 @@ const SUBCATEGORY_BY_CATEGORY: Record<string, { value: string; label: string }[]
     { value: "case", label: "Case" },
     { value: "cable", label: "Cable" },
   ],
+  refrigerator: [{ value: "refrigerator", label: "Refrigerator" }],
+  microwaves: [{ value: "microwave", label: "Microwave" }],
+  kitchen: [{ value: "kitchen-appliance", label: "Kitchen Appliance" }],
+  washers: [{ value: "washer", label: "Washer" }],
+  freezer: [{ value: "freezer", label: "Freezer" }],
+  airconditioners: [{ value: "airconditioner", label: "Airconditioner" }],
 };
 
 const STEPS = [
@@ -135,7 +147,7 @@ function defaultListing(): ListingFormState {
 
     priceCents: 0,
     compareAtCents: 0,
-    currency: "USD",
+    currency: "KES",
     stock: 0,
 
     images: [],
@@ -484,6 +496,7 @@ export default function ListingStepperForm({
                   <Select
                     options={STATUS_OPTIONS}
                     placeholder="Select status"
+                    value={form.status}
                     onChange={(v: any) => updateTop("status", v)}
                     className="dark:bg-dark-900"
                   />
@@ -494,6 +507,7 @@ export default function ListingStepperForm({
                   <Select
                     options={CURRENCY_OPTIONS}
                     placeholder="Select currency"
+                    value={form.currency}
                     onChange={(v: any) => updateTop("currency", v)}
                     className="dark:bg-dark-900"
                   />
@@ -563,6 +577,7 @@ export default function ListingStepperForm({
                   <Select
                     options={CATEGORY_OPTIONS}
                     placeholder="Select category"
+                    value={form.category}
                     onChange={(v: any) => {
                       updateTop("category", v);
                       const nextSub = SUBCATEGORY_BY_CATEGORY[v]?.[0]?.value || "";
@@ -577,6 +592,7 @@ export default function ListingStepperForm({
                   <Select
                     options={subcategoryOptions}
                     placeholder="Select subcategory"
+                    value={form.subcategory}
                     onChange={(v: any) => updateTop("subcategory", v)}
                     className="dark:bg-dark-900"
                   />
@@ -605,7 +621,7 @@ export default function ListingStepperForm({
           {STEPS[step].key === "pricing" && (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
               <div>
-                <Label>Price (cents)</Label>
+                <Label>Price</Label>
                 <Input
                   type="text"
                   value={String(form.priceCents || 0)}
@@ -617,7 +633,7 @@ export default function ListingStepperForm({
               </div>
 
               <div>
-                <Label>Compare at (cents)</Label>
+                <Label>Compare at</Label>
                 <Input
                   type="text"
                   value={String(form.compareAtCents || 0)}

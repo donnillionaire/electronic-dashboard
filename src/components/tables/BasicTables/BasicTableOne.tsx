@@ -109,7 +109,7 @@ function safeFirstImage(product: Product): string {
 }
 
 function moneyCents(priceCents: number, currency = "USD") {
-  const val = (priceCents ?? 0) / 100;
+  const val = priceCents ?? 0;
   const prefix = currency === "USD" ? "$" : `${currency} `;
   return `${prefix}${val.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 }
@@ -215,7 +215,7 @@ export default function BasicTableProducts() {
     sku: "",
     priceCents: 0,
     compareAtCents: undefined,
-    currency: "USD",
+    currency: "KES",
     stock: 0,
     isNew: false,
     isBestSeller: false,
