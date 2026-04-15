@@ -73,17 +73,21 @@ const STATUS_OPTIONS = [
 
 const CATEGORY_OPTIONS = [
   { value: "phone", label: "Phone" },
-  { value: "tv", label: "TV" },
+  { value: "tv", label: "TVs" },
   { value: "audio", label: "Audio" },
   { value: "laptop", label: "Laptop" },
   { value: "camera", label: "Camera" },
   { value: "accessory", label: "Accessory" },
   { value: "refrigerator", label: "Refrigerator" },
   { value: "microwaves", label: "Microwaves" },
-  { value: "kitchen", label: "Kitchen" },
-  { value: "washers", label: "Washers" },
+  { value: "kitchen", label: "Kitchen Appliances" },
+  { value: "washers", label: "Washing Machines" },
   { value: "freezer", label: "Freezer" },
   { value: "airconditioners", label: "Airconditioners" },
+  { value: "stand-fans", label: "Stand Fans" },
+  { value: "projectors", label: "Projectors" },
+  { value: "icemakers", label: "Icemakers" },
+  { value: "showcase-fridges", label: "Showcase Fridges" },
 ];
 
 const SUBCATEGORY_BY_CATEGORY: Record<string, { value: string; label: string }[]> =
@@ -96,11 +100,17 @@ const SUBCATEGORY_BY_CATEGORY: Record<string, { value: string; label: string }[]
     { value: "smart-tv", label: "Smart TV" },
     { value: "oled", label: "OLED" },
     { value: "qled", label: "QLED" },
+    { value: "4khdr", label: "4K HDR" },
+    { value: "mini-led", label: "Mini-LED" },
+    { value: "sqn-mini-led", label: "SQD Mini-LED" },
   ],
   audio: [
+    { value: "soundbar", label: "Soundbars" },
+    { value: "hi-fi", label: "Hi-Fi" },
+    { value: "home-theatre", label: "Home Theatre" },
+    { value: "party-rockers", label: "Party Rockers" },
     { value: "earbuds", label: "Earbuds" },
     { value: "headphones", label: "Headphones" },
-    { value: "soundbar", label: "Soundbar" },
     { value: "speaker", label: "Speaker" },
   ],
   laptop: [
@@ -117,12 +127,33 @@ const SUBCATEGORY_BY_CATEGORY: Record<string, { value: string; label: string }[]
     { value: "case", label: "Case" },
     { value: "cable", label: "Cable" },
   ],
-  refrigerator: [{ value: "refrigerator", label: "Refrigerator" }],
+  refrigerator: [
+    { value: "refrigerator", label: "Refrigerator" },
+    { value: "showcase-fridge", label: "Showcase Fridge" },
+  ],
   microwaves: [{ value: "microwave", label: "Microwave" }],
-  kitchen: [{ value: "kitchen-appliance", label: "Kitchen Appliance" }],
-  washers: [{ value: "washer", label: "Washer" }],
+  kitchen: [
+    { value: "kitchen-appliance", label: "Kitchen Appliance" },
+    { value: "dispensers", label: "Dispensers" },
+    { value: "blender", label: "Blender" },
+    { value: "air-fryers", label: "Air Fryers" },
+    { value: "microwaves", label: "Microwaves" },
+    { value: "ovens", label: "Ovens" },
+    { value: "pressure-cookers", label: "Pressure Cookers" },
+    { value: "iron-boxes", label: "Iron Boxes" },
+  ],
+  washers: [
+    { value: "washer", label: "Washer" },
+    { value: "top-load", label: "Top Load" },
+    { value: "front-load", label: "Front Load" },
+    { value: "twin-tub", label: "Twin Tub" },
+  ],
   freezer: [{ value: "freezer", label: "Freezer" }],
   airconditioners: [{ value: "airconditioner", label: "Airconditioner" }],
+  "stand-fans": [{ value: "stand-fan", label: "Stand Fan" }],
+  projectors: [{ value: "projector", label: "Projector" }],
+  icemakers: [{ value: "icemaker", label: "Icemaker" }],
+  "showcase-fridges": [{ value: "showcase-fridge", label: "Showcase Fridge" }],
 };
 
 const STEPS = [
