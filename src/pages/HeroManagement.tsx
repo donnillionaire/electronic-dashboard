@@ -3,9 +3,14 @@ import PageBreadcrumb from "../components/common/PageBreadCrumb";
 import PageMeta from "../components/common/PageMeta";
 import BASE_URL from "../components/url";
 
-const API_BASE = String(BASE_URL || "").replace(/\/$/, "");
-const HERO_IMAGES_ENDPOINT = `${API_BASE}/api/hero-images`;
-const HERO_UPLOAD_ENDPOINT = `${API_BASE}/api/hero-images/upload`;
+const HERO_API_BASE = String(
+  import.meta.env.VITE_HERO_API_BASE_URL ||
+    import.meta.env.VITE_API_BASE_URL ||
+    BASE_URL ||
+    ""
+).replace(/\/$/, "");
+const HERO_IMAGES_ENDPOINT = `${HERO_API_BASE}/api/hero-images`;
+const HERO_UPLOAD_ENDPOINT = `${HERO_API_BASE}/api/hero-images/upload`;
 
 function uniqueImages(images: string[]) {
   return Array.from(
@@ -13,11 +18,13 @@ function uniqueImages(images: string[]) {
   );
 }
 
-function normalizeImageSrc(url: string) {
-  if (!url) return "/images/grid-image/image-01.png";
+function resolveHeroImageUrl(url: string) {
+  if (!url) return "";
   if (/^https?:\/\//i.test(url)) return url;
+  if (url.startsWith("//")) return `https:${url}`;
+
   const path = url.startsWith("/") ? url : `/${url}`;
-  return `${API_BASE}${path}`;
+  return HERO_API_BASE ? `${HERO_API_BASE}${path}` : path;
 }
 
 function parseHeroImages(payload: any): string[] {
@@ -66,6 +73,7 @@ export default function HeroManagement() {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [failedImageUrls, setFailedImageUrls] = useState<string[]>([]);
 
   const previewUrls = useMemo(
     () => selectedFiles.map((file) => URL.createObjectURL(file)),
@@ -95,6 +103,7 @@ export default function HeroManagement() {
       const nextImages = parseHeroImages(payload);
       setImages(nextImages);
       setDraftImages(nextImages.join("\n"));
+      setFailedImageUrls([]);
     } catch (e: any) {
       setError(e?.message || "Failed to fetch hero images");
     } finally {
@@ -133,6 +142,7 @@ export default function HeroManagement() {
       const finalImages = savedImages.length > 0 ? savedImages : nextImages;
       setImages(finalImages);
       setDraftImages(finalImages.join("\n"));
+      setFailedImageUrls([]);
       setSuccess("Hero images updated.");
     } catch (e: any) {
       setError(e?.message || "Failed to save hero images");
@@ -184,6 +194,7 @@ export default function HeroManagement() {
       if (uploadedImages.length > 0) {
         setImages(uploadedImages);
         setDraftImages(uploadedImages.join("\n"));
+        setFailedImageUrls([]);
       } else {
         await loadHeroImages();
       }
@@ -251,49 +262,81 @@ export default function HeroManagement() {
             </div>
           ) : (
             <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {images.map((image, index) => (
-                <div
-                  key={`${image}-${index}`}
-                  className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
-                >
-                  <div className="relative aspect-[16/7] bg-gray-100 dark:bg-white/[0.05]">
-                    <img
-                      src={normalizeImageSrc(image)}
-                      alt={`Hero image ${index + 1}`}
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        e.currentTarget.src = "/images/grid-image/image-01.png";
-                      }}
-                    />
-                    {index === 0 && (
-                      <span className="absolute left-3 top-3 rounded-full bg-gray-900/80 px-3 py-1 text-xs font-medium text-white">
-                        Primary
-                      </span>
-                    )}
-                  </div>
+              {images.map((image, index) => {
+                const fullImageUrl = resolveHeroImageUrl(image);
+                const didFail = failedImageUrls.includes(fullImageUrl);
 
-                  <div className="flex items-start justify-between gap-3 p-3">
-                    <div className="min-w-0">
-                      <div className="text-xs uppercase text-gray-400">
-                        Image {index + 1}
-                      </div>
-                      <div className="mt-1 truncate text-sm text-gray-700 dark:text-gray-300">
-                        {image}
-                      </div>
+                return (
+                  <div
+                    key={`${image}-${index}`}
+                    className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
+                  >
+                    <div className="relative aspect-[16/7] bg-gray-100 dark:bg-white/[0.05]">
+                      {fullImageUrl ? (
+                        <img
+                          src={fullImageUrl}
+                          alt={`Hero image ${index + 1}`}
+                          className={`h-full w-full object-cover ${
+                            didFail ? "opacity-20" : ""
+                          }`}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          onLoad={() => {
+                            setFailedImageUrls((current) =>
+                              current.filter((url) => url !== fullImageUrl)
+                            );
+                          }}
+                          onError={() => {
+                            setFailedImageUrls((current) =>
+                              current.includes(fullImageUrl)
+                                ? current
+                                : [...current, fullImageUrl]
+                            );
+                          }}
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400">
+                          Missing image URL
+                        </div>
+                      )}
+
+                      {didFail && (
+                        <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-sm font-medium text-red-600 dark:text-red-400">
+                          Image failed to load
+                        </div>
+                      )}
+
+                      {index === 0 && (
+                        <span className="absolute left-3 top-3 rounded-full bg-gray-900/80 px-3 py-1 text-xs font-medium text-white">
+                          Primary
+                        </span>
+                      )}
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => removeHeroImage(image)}
-                      disabled={isSaving || isUploading}
-                      className="shrink-0 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-red-900/60 dark:text-red-400 dark:hover:bg-red-500/10"
-                    >
-                      Remove
-                    </button>
+
+                    <div className="flex items-start justify-between gap-3 p-3">
+                      <div className="min-w-0">
+                        <div className="text-xs uppercase text-gray-400">
+                          Image {index + 1}
+                        </div>
+                        <div
+                          className="mt-1 truncate text-sm text-gray-700 dark:text-gray-300"
+                          title={fullImageUrl}
+                        >
+                          {fullImageUrl}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeHeroImage(image)}
+                        disabled={isSaving || isUploading}
+                        className="shrink-0 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-red-900/60 dark:text-red-400 dark:hover:bg-red-500/10"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
