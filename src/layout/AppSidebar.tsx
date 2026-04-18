@@ -9,6 +9,7 @@ import {
   GridIcon,
   HorizontaLDots,
   ListIcon,
+  ShootingStarIcon,
   // PageIcon,
   // PieChartIcon,
   // PlugInIcon,
@@ -49,6 +50,11 @@ const navItems: NavItem[] = [
 
     subItems: [{ name: "Products", path: "/basic-tables", pro: false }],
 
+  },
+  {
+    icon: <ShootingStarIcon />,
+    name: "Hero Management",
+    path: "/hero-management",
   },
   // {
   //   name: "Tables",
